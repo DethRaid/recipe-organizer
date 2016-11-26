@@ -15,8 +15,12 @@ putRecipeR recipeId = do
     insertedRecipe <- runDB $ insert recipe
     returnJson insertedRecipe
 
-postRecipeR :: RecipeId -> Handler Value
-postRecipeR _ = sendResponseStatus internalServerError500 $ RepJson "Not yet implimented"
-
 deleteRecipeR :: RecipeId -> Handler Value
 deleteRecipeR _ = sendResponseStatus internalServerError500 $ RepJson "Doesn't exist"
+
+
+postRecipesR :: Handler Value
+postRecipesR = do
+    recipe  <- requireJsonBody :: Handler Recipe
+    _       <- runDB $ insert recipe
+    sendResponseStatus status201 ("CREATED" :: Text)

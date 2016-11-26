@@ -141,6 +141,7 @@ instance Yesod App where
     isAuthorized RobotsR _ = return Authorized
     isAuthorized (StaticR _) _ = return Authorized
     isAuthorized (RecipeR _) _ = return Authorized
+    isAuthorized RecipesR _ = return Authorized
 
     isAuthorized ProfileR _ = isAuthenticated
 
