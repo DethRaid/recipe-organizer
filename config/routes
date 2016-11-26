@@ -11,4 +11,4 @@
 /profile            ProfileR    GET
 
 /recipes/#RecipeId  RecipeR     GET PUT DELETE
-/recipes            RecipesR    POST
+/recipes            RecipesR    GET POST
