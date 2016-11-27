@@ -1,0 +1,8 @@
+<div .container>
+    <!-- Generate a row for every recipe we get -->
+    $forall Recipe name imageUrl _originalUrl _totalTime _ingredients _steps <- recipes
+        <div .row>
+            <div .recipe-img>
+                <img src="#{imageUrl}">
+            <div .recipe-title>
+                <h2><a href="@{RecipeR}">name</a></h2>

@@ -2,15 +2,21 @@ module Handler.Recipe where
 
 import Import
 
-getRecipeR :: RecipeId -> Handler Value
+unpackMaybe :: Maybe Text -> Text
+unpackMaybe Nothing = ""
+unpackMaybe (Just a) = a
+
+getRecipeR :: RecipeId -> Handler Html
 getRecipeR recipeId = do
     recipe <- runDB $ get404 recipeId
-    return $ object ["recipe" .= Entity recipeId recipe]
+    let imageUrl = unpackMaybe $ recipeImageUrl recipe
+    let name = recipeName recipe
+    defaultLayout $(widgetFile "recipe")
 
 putRecipeR :: RecipeId -> Handler Value
 putRecipeR recipeId = do
     recipe <- requireJsonBody :: Handler Recipe
-    insertedRecipe <- runDB $ replace recipeId recipe
+    _ <- runDB $ replace recipeId recipe
     sendResponseStatus status200 ("UPDATED" :: Text)
 
 deleteRecipeR :: RecipeId -> Handler Value
