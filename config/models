@@ -23,7 +23,7 @@ StepList json
     steps [Text]
 
 Recipe json
-    name Text
+    name Text Unique
     imageUrl Text Maybe
     originalUrl Text Maybe
     totalTime Text Maybe

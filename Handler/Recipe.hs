@@ -6,12 +6,13 @@ unpackMaybe :: Maybe Text -> Text
 unpackMaybe Nothing = ""
 unpackMaybe (Just a) = a
 
-getRecipeR :: RecipeId -> Handler Html
-getRecipeR recipeId = do
-    recipe <- runDB $ get404 recipeId
-    let imageUrl = unpackMaybe $ recipeImageUrl recipe
-    let name = recipeName recipe
-    defaultLayout $(widgetFile "recipe")
+getRecipeR :: Text -> Handler Html
+getRecipeR givenName = do
+    recipeEntityMaybe <- runDB $ selectFirst [RecipeName ==. givenName] []
+    case recipeEntityMaybe of
+        Nothing -> defaultLayout ""
+        Just (Entity _ recipe) ->
+            defaultLayout $(widgetFile "recipe")
 
 putRecipeR :: RecipeId -> Handler Value
 putRecipeR recipeId = do
